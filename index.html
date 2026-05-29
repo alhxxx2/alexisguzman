@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TAE Fotografía Digital | Apocalypse Edition</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@1,500;1,700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:
+    radial-gradient(circle at top, rgba(56,189,248,0.08), transparent 40%),
+    linear-gradient(to bottom,#020617,#030712,#000000);
+    color:#e6edf6;
+    font-family:'Montserrat',sans-serif;
+    display:flex;
+    flex-direction:column;
+    overflow-x:hidden;
+}
+
+/* ===== ESTRELLAS ===== */
+
+.estrellas{
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    pointer-events:none;
+    z-index:-1;
+    overflow:hidden;
+}
+
+.estrellas span{
+    position:absolute;
+    width:2px;
+    height:2px;
+    background:white;
+    border-radius:50%;
+    opacity:0.7;
+    animation:parpadeo linear infinite;
+}
+
+@keyframes parpadeo{
+    0%{
+        transform:translateY(0px);
+        opacity:0.2;
+    }
+    50%{
+        opacity:1;
+    }
+    100%{
+        transform:translateY(-100px);
+        opacity:0;
+    }
+}
+
+/* ===== GALERÍA ===== */
+
+.banner-contenido{
+    width:100%;
+    overflow:hidden;
+    padding:40px 0;
+}
+
+.comportamiento{
+    display:flex;
+    width:max-content;
+    animation:scroll 30s linear infinite;
+}
+
+.comportamiento:hover{
+    animation-play-state:paused;
+}
+
+.slide{
+    width:250px;
+    height:320px;
+    padding:0 12px;
+}
+
+.slide img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.05);
+    box-shadow:0 10px 25px rgba(0,0,0,0.7);
+    transition:0.5s;
+    filter:brightness(0.82);
+}
+
+.slide img:hover{
+    transform:scale(1.05);
+    filter:brightness(1);
+    box-shadow:
+    0 0 30px rgba(56,189,248,0.18),
+    0 0 80px rgba(56,189,248,0.10);
+}
+
+@keyframes scroll{
+    0%{ transform:translateX(0); }
+    100%{ transform:translateX(-50%); }
+}
+
+/* ===== FOOTER ===== */
+
+.vanguard-footer{
+    width:100%;
+    padding:80px 0 40px 0;
+    border-top:1px solid rgba(148,163,184,0.1);
+}
+
+.footer-container{
+    max-width:1000px;
+    margin:0 auto;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+}
+
+.footer-nav{
+    margin-bottom:60px;
+}
+
+.footer-nav ul{
+    list-style:none;
+    display:flex;
+    gap:50px;
+}
+
+.footer-nav a{
+    color:#94a3b8;
+    text-decoration:none;
+    font-size:0.75rem;
+    letter-spacing:5px;
+    text-transform:uppercase;
+    font-weight:300;
+    transition:0.4s;
+    position:relative;
+}
+
+.footer-nav a:hover{
+    color:#e6edf6;
+}
+
+.footer-nav a::after{
+    content:'';
+    position:absolute;
+    width:0;
+    height:1px;
+    bottom:-6px;
+    left:0;
+    background:#38bdf8;
+    transition:0.4s;
+}
+
+.footer-nav a:hover::after{
+    width:100%;
+}
+
+.photo-banner{
+    width:100%;
+    height:220px;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-bottom:60px;
+}
+
+.lens-flare{
+    position:absolute;
+    width:200px;
+    height:200px;
+    background:radial-gradient(circle, rgba(56,189,248,0.15) 0%, transparent 70%);
+    border-radius:50%;
+    filter:blur(40px);
+    animation:flareMove 10s infinite alternate;
+}
+
+.banner-text{
+    z-index:2;
+    font-size:2rem;
+    letter-spacing:12px;
+    text-transform:uppercase;
+    color:rgba(230,237,246,0.7);
+    text-shadow:
+    0 0 20px rgba(56,189,248,0.35),
+    0 0 60px rgba(56,189,248,0.15);
+}
+
+.focus-corners{
+    position:absolute;
+    width:280px;
+    height:160px;
+    border:1px solid rgba(148,163,184,0.1);
+}
+
+.footer-brand h2{
+    font-size:1.6rem;
+    letter-spacing:6px;
+    color:#e6edf6;
+}
+
+.footer-brand span{
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    color:#38bdf8;
+}
+
+.copyright{
+    margin-top:40px;
+    font-size:0.6rem;
+    color:#475569;
+    letter-spacing:3px;
+}
+
+@keyframes flareMove{
+    0%{ transform:translate(-80px,-10px); }
+    100%{ transform:translate(80px,10px); }
+}
+
+/* ===== PANTALLAS ===== */
+
+.pantalla{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(2,6,23,0.94);
+    backdrop-filter:blur(18px);
+    z-index:9999;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    animation:fadeIn 0.5s ease;
+}
+
+.cerrar{
+    position:absolute;
+    top:20px;
+    left:20px;
+    color:#38bdf8;
+    cursor:pointer;
+    letter-spacing:2px;
+}
+
+@keyframes fadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+h1{
+    font-size:3rem;
+    margin-bottom:25px;
+    letter-spacing:10px;
+    color:#e2e8f0;
+    text-shadow:0 0 25px rgba(56,189,248,0.35);
+}
+
+/* ===== GALERÍA INTERNA ===== */
+
+.galeria-scroll{
+    display:flex;
+    gap:20px;
+    overflow-x:auto;
+    padding:20px;
+    max-width:90%;
+}
+
+.galeria-scroll img{
+    width:260px;
+    height:340px;
+    object-fit:cover;
+    border-radius:12px;
+    transition:0.5s;
+    flex-shrink:0;
+    border:1px solid rgba(255,255,255,0.05);
+}
+
+.galeria-scroll img:hover{
+    transform:scale(1.08);
+    box-shadow:
+    0 0 30px rgba(56,189,248,0.18),
+    0 0 80px rgba(56,189,248,0.10);
+}
+
+/* ===== VIDEO ===== */
+
+video{
+    border-radius:18px;
+    box-shadow:
+    0 0 30px rgba(56,189,248,0.15),
+    0 0 80px rgba(56,189,248,0.08);
+}
+
+/* ===== SCROLL ===== */
+
+::-webkit-scrollbar{
+    height:8px;
+    width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#38bdf8;
+    border-radius:10px;
+}
+
+::-webkit-scrollbar-track{
+    background:#020617;
+}
+</style>
+</head>
+
+<body>
+
+<div class="estrellas">
+    <span style="left:5%; animation-duration:7s;"></span>
+    <span style="left:15%; animation-duration:10s;"></span>
+    <span style="left:25%; animation-duration:12s;"></span>
+    <span style="left:35%; animation-duration:8s;"></span>
+    <span style="left:45%; animation-duration:11s;"></span>
+    <span style="left:55%; animation-duration:9s;"></span>
+    <span style="left:65%; animation-duration:13s;"></span>
+    <span style="left:75%; animation-duration:7s;"></span>
+    <span style="left:85%; animation-duration:12s;"></span>
+    <span style="left:95%; animation-duration:9s;"></span>
+</div>
+
+<section class="banner-contenido">
+    <div class="comportamiento">
+
+        <div class="slide"><img src="Fotografia/imagen1.jpg"></div>
+        <div class="slide"><img src="Fotografia/imagen2.jpg"></div>
+        <div class="slide"><img src="Fotografia/imagen3.jpg"></div>
+        <div class="slide"><img src="Fotografia/imagen4.jpg"></div>
+        <div class="slide"><img src="Fotografia/imagen5.jpg"></div>
+        <div class="slide"><img src="Fotografia/imagen6.jpg"></div>
+        <div class="slide"><img src="Fotografia/imagen7.jpg"></div>
+        <div class="slide"><img src="Fotografia/imagen8.jpg"></div>
+
+        <div class="slide"><img src="Fotografia/imagen1.jpg"></div>
+        <div class="slide"><img src="Fotografia/imagen2.jpg"></div>
+        <div class="slide"><img src="Fotografia/imagen3.jpg"></div>
+        <div class="slide"><img src="Fotografia/imagen4.jpg"></div>
+        <div class="slide"><img src="Fotografia/imagen5.jpg"></div>
+        <div class="slide"><img src="Fotografia/imagen6.jpg"></div>
+        <div class="slide"><img src="Fotografia/imagen7.jpg"></div>
+        <div class="slide"><img src="Fotografia/imagen8.jpg"></div>
+
+    </div>
+</section>
+
+<footer class="vanguard-footer">
+    <div class="footer-container">
+
+        <nav class="footer-nav">
+            <ul>
+                <li><a href="#" onclick="abrir('p_tae3')">TAE3</a></li>
+                <li><a href="#" onclick="abrir('p_tae4')">TAE4</a></li>
+                <li><a href="#" onclick="abrir('p_tae5')">TAE5</a></li>
+                <li><a href="#" onclick="abrir('p_tae6')">TAE6</a></li>
+            </ul>
+        </nav>
+
+        <section class="photo-banner">
+            <div class="lens-flare"></div>
+            <div class="focus-corners"></div>
+            <h3 class="banner-text">Capturando Creatividad</h3>
+        </section>
+
+        <div class="footer-brand">
+            <h2>TAE <span>Fotografía Digital</span></h2>
+        </div>
+
+        <p class="copyright">&copy; 2026 Visual Arts Studio</p>
+
+    </div>
+</footer>
+
+<div id="p_tae3" class="pantalla">
+    <div class="cerrar" onclick="cerrar()">⬅ VOLVER</div>
+
+    <h1>TAE3</h1>
+
+    <div class="galeria-scroll">
+        <img src="Fotografia/imagen11.jpg">
+        <img src="Fotografia/imagen12.jpg">
+        <img src="Fotografia/imagen13.jpg">
+        <img src="Fotografia/imagen14.jpg">
+    </div>
+</div>
+
+<div id="p_tae4" class="pantalla">
+    <div class="cerrar" onclick="cerrar()">⬅ VOLVER</div>
+
+    <h1>TAE4</h1>
+
+    <video controls playsinline width="700">
+        <source src="Fotografia/video.mp4" type="video/mp4">
+    </video>
+</div>
+
+<div id="p_tae5" class="pantalla">
+    <div class="cerrar" onclick="cerrar()">⬅ VOLVER</div>
+
+    <h1>TAE5</h1>
+
+    <div class="galeria-scroll">
+        <img src="Fotografia/imagen17.jpg">
+        <img src="Fotografia/imagen18.png">
+        <img src="Fotografia/imagen18.jpg">
+        <img src="Fotografia/imagen20.jpg">
+    </div>
+</div>
+
+<div id="p_tae6" class="pantalla">
+    <div class="cerrar" onclick="cerrar()">⬅ VOLVER</div>
+
+    <h1>TAE6</h1>
+
+    <div class="galeria-scroll">
+        <img src="Fotografia/imagen21.jpg">
+        <img src="Fotografia/imagen22.jpg">
+        <img src="Fotografia/imagen23.jpg">
+        <img src="Fotografia/imagen24.jpg">
+    </div>
+</div>
+
+<audio id="musica" loop>
+    <source src="Fotografia/Apocalypse.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const musica = document.getElementById("musica");
+const video = document.querySelector("video");
+
+function abrir(id){
+
+    document.getElementById(id).style.display = "flex";
+
+    if(id === "p_tae4"){
+        musica.pause();
+    }
+}
+
+function cerrar(){
+
+    document.querySelectorAll('.pantalla').forEach(p=>{
+        p.style.display = "none";
+    });
+
+    video.pause();
+    video.currentTime = 0;
+
+    musica.play();
+}
+
+document.addEventListener("click", () => {
+    musica.play();
+}, { once:true });
+
+video.addEventListener("play", () => {
+    musica.pause();
+});
+
+video.addEventListener("pause", () => {
+
+    if(video.currentTime > 0 && !video.ended){
+        musica.play();
+    }
+});
+
+video.addEventListener("ended", () => {
+    musica.play();
+});
+</script>
+
+</body>
+</html>
